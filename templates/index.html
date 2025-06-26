@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Donation Center | Support Your Favorite Charity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .tagline {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        
+        /* Form Styles */
+        .donation-form {
+            background-color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .image-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin-top: 10px;
+            display: none;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .upload-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Main Content Styles */
+        .intro {
+            background-color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .how-it-works {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .step {
+            flex-basis: 30%;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .step-number {
+            background-color: #4CAF50;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        
+        /* Items Section */
+        .items-section {
+            background-color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .item {
+            text-align: center;
+            padding: 15px;
+            background-color: #f0f8f8;
+            border-radius: 5px;
+        }
+        
+        .item-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        /* Donated Items Section */
+        .donated-items-section {
+            background-color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .item-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+        
+        .item-name {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.3em;
+        }
+        
+        .item-description {
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .donor-info {
+            color: #777;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        .action-btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 8px 15px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .action-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .add-item-btn {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin: 20px auto;
+            width: 200px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .add-item-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background-color: #4CAF50;
+            color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .contact-method {
+            flex-basis: 30%;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .step {
+                flex-basis: 100%;
+            }
+            
+            .contact-method {
+                flex-basis: 100%;
+            }
+            
+            .item-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Charity Donation Center</h1>
+            <p class="tagline">Help us make a difference by supporting our cause</p>
+        </header>
+        
+        <section class="intro">
+            <h2>Make Your Donation Count Twice</h2>
+            <p>Donate your gently used household items to <strong>Your Charity Name</strong>, and we'll convert them into funds for <strong>your</strong> preferred charity! Together, we can make a difference while decluttering your home.</p>
+        </section>
+        
+        <section class="items-section">
+            <h2>We Accept These Items:</h2>
+            <div class="items-grid">
+                <div class="item">
+                    <div class="item-icon">🛋️</div>
+                    <div>Furniture</div>
+                </div>
+                <div class="item">
+                    <div class="item-icon">👕</div>
+                    <div>Clothing</div>
+                </div>
+                <div class="item">
+                    <div class="item-icon">📱</div>
+                    <div>Electronics</div>
+                </div>
+                <div class="item">
+                    <div class="item-icon">🍽️</div>
+                    <div>Kitchenware</div>
+                </div>
+                <div class="item">
+                    <div class="item-icon">📚</div>
+                    <div>Books</div>
+                </div>
+                <div class="item">
+                    <div class="item-icon">🧸</div>
+                    <div>Toys</div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 style="text-align: center;">How It Works</h2>
+            <div class="how-it-works">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Donate</h3>
+                    <p>Add your items using our simple online form or bring them to our center.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose</h3>
+                    <p>Select which charity you'd like the proceeds to support.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>We Convert</h3>
+                    <p>We sell your items and donate the funds to your chosen cause!</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Donation Form Section -->
+        <section class="donation-form" id="donation-form">
+            <h2>Donate an Item</h2>
+            <form action="{{ url_for('donate') }}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Item Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price ($):</label>
+                    <input type="number" id="price" name="price" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="donor">Your Name (optional):</label>
+                    <input type="text" id="donor" name="donor">
+                </div>
+                
+                <div class="form-group">
+                    <label for="charity">Select Charity:</label>
+                    <select id="charity" name="charity" required>
+                        <option value="">-- Select a Charity --</option>
+                        <option value="Red Cross">Red Cross</option>
+                        <option value="UNICEF">UNICEF</option>
+                        <option value="Local Food Bank">Local Food Bank</option>
+                        <option value="Animal Shelter">Animal Shelter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Upload Photo of Item:</label>
+                    <input type="file" id="image" name="image" accept="image/*" style="display: none;">
+                    <label for="image" class="upload-btn">
+                        <i class="fas fa-camera"></i> Choose Image
+                    </label>
+                    <img id="image-preview" class="image-preview" alt="Image preview">
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Donation</button>
+            </form>
+        </section>
+        
+        <section class="donated-items-section">
+            <h2>Available Items for Purchase</h2>
+            <a href="#donation-form" class="add-item-btn">
+                <i class="fas fa-plus"></i> Donate an Item
+            </a>
+            
+
+           
+            
+            <div class="items-container">
+                {% if items %}
+                    {% for item in items %}
+                    <div class="item-card">
+                        {% if item.image %}
+                        <img src="{{ url_for('uploaded_file', filename=item.image) }}" alt="{{ item.name }}" class="item-image">
+                        {% else %}
+                        <div style="height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-image" style="font-size: 3em; color: #ccc;"></i>
+                        </div>
+                        {% endif %}
+                        <h3 class="item-name">{{ item.name }}</h3>
+                        <p class="item-price">${{ "%.2f"|format(item.price) }}</p>
+                        <p class="item-description">{{ item.description }}</p>
+                        {% if item.donor %}
+                        <p class="donor-info">Donated by: {{ item.donor }}</p>
+                        {% endif %}
+                        {% if item.charity %}
+                        <p class="donor-info">Benefiting: {{ item.charity }}</p>
+                        {% endif %}
+                        <a href="{{ url_for('buy', item_id=item.id) }}" class="action-btn">
+                            <i class="fab fa-paypal"></i> Buy with PayPal
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; width: 100%; padding: 40px;">
+                        <i class="fas fa-box-open" style="font-size: 3em; color: #ccc;"></i>
+                        <p style="color: #666;">No donated items yet. Be the first to contribute!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        
+        <section class="contact-section">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-method">
+                    <h3>📍 Drop-off Location</h3>
+                    <p>123 Charity Way<br>Your City, ST 12345</p>
+                </div>
+                <div class="contact-method">
+                    <h3>📅 Hours</h3>
+                    <p>Monday-Friday: 9am-5pm<br>Saturday: 10am-2pm</p>
+                </div>
+                <div class="contact-method">
+                    <h3>📞 Contact</h3>
+                    <p>Phone: (123) 456-7890<br>Email: info@yourcharity.org</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 Your Charity Name. All rights reserved.</p>
+            <p>Visit us at: www.yourcharity.org | Follow us on social media</p>
+        </footer>
+    </div>
+
+    <script>
+        // Image preview functionality
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('image-preview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Smooth scroll to donation form
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

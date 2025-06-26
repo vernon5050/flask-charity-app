@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy {{ item['name'] }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .price {
+            font-size: 1.5em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #paypal-button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buy "{{ item['name'] }}"</h1>
+
+        {% if item['image'] %}
+            <img src="{{ url_for('uploaded_file', filename=item['image']) }}" alt="{{ item['name'] }}">
+        {% endif %}
+
+        <p>{{ item['description'] }}</p>
+        <p class="price">Price: ${{ "%.2f"|format(item['price']) }}</p>
+
+        <div id="paypal-button-container"></div>
+
+        <a href="{{ url_for('index') }}" class="back-link">← Back to Items</a>
+    </div>
+
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{ "%.2f"|format(item["price"]) }}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    fetch('/mark_sold/{{ item["id"] }}', {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Thank you, ' + details.payer.name.given_name + '! Your item has been marked as sold.');
+                        window.location.href = '/';
+                    });
+                });
+            },
+            onError: function(err) {
+                alert('Payment could not be completed. Please try again.');
+                console.error(err);
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donate Item</title>
+</head>
+<body>
+    <h1>Donate an Item</h1>
+    <form method="post">
+        Name: <input type="text" name="name" required><br>
+        Description: <textarea name="description"></textarea><br>
+        Your Name: <input type="text" name="donor"><br>
+        Price (USD): <input type="number" name="price" step="0.01" required><br>
+        <input type="submit" value="Donate">
+    </form>
+    <a href="{{ url_for('index') }}">Back to Items</a>
+</body>
+</html>

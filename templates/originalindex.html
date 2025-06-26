@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charity Items</title>
+</head>
+<body>
+    <h1>Available Items for Purchase</h1>
+    <a href="{{ url_for('donate') }}">Donate an Item</a>
+    <ul>
+        {% for item in items %}
+        <li>
+            <strong>{{ item['name'] }}</strong> - ${{ item['price'] }}<br>
+            {{ item['description'] }}<br>
+            Donated by: {{ item['donor'] }}<br>
+            <a href="{{ url_for('buy', item_id=item['id']) }}">Buy with PayPal</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
