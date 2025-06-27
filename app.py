@@ -2,7 +2,8 @@ import sqlite3
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
-from serverless_http import serverless  # Required for Vercel
+# from serverless_http import serverless  # Required for Vercel
+from serverless_wsgi import handle_request 
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -91,7 +92,8 @@ def mark_sold(item_id):
     return jsonify({'status': 'success'})
 
 # Vercel serverless handler
-handler = serverless(app)
+# handler = serverless(app)
+handler = handle_request(app)  # New handler for Vercel
 
 # Run the Flask app locally if not in Vercel environment
 if __name__ == '__main__':
