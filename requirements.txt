@@ -7,4 +7,4 @@ MarkupSafe==3.0.2
 Werkzeug==3.1.3
 Flask
 Flask-SQLAlchemy
-serverless-http==2.0.2
+serverless-http==3.0.0  # Updated version that supports Python 3.12
