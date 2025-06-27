@@ -89,7 +89,6 @@ def mark_sold(item_id):
     conn.close()
     return jsonify({'status': 'success'})
 
-# Run the Flask app (Render-compatible)
+# Run the Flask app
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))  # Default to 10000 for local testing
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=5000, debug=True)
